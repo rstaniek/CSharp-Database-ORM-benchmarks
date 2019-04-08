@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace IPC.Raymond.Benchmark.DAL.SQL
 {
-    public class OrderInvoiceStoredProcedureRepository : IRepository<InvoiceDto>
+    public class StoredProcedureRepository : IRepository<InvoiceDto, InsertTableDto>
     {
         private readonly string _connStr;
 
-        public OrderInvoiceStoredProcedureRepository(string connStr)
+        public StoredProcedureRepository(string connStr)
         {
             _connStr = connStr;
         }
@@ -69,6 +69,25 @@ namespace IPC.Raymond.Benchmark.DAL.SQL
                 }
             }
             return invoices;
+        }
+
+        public int InsertRows(IEnumerable<InsertTableDto> rows)
+        {
+            int rowCount = 0;
+            using(var conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                foreach(var row in rows)
+                {
+                    string qry = $"exec sp_insert_row '{row.id}','{row.textVar}','{row.timestamp}',{row.number1}";
+                    using(var cmd = new SqlCommand(qry, conn))
+                    {
+                        int affected = cmd.ExecuteNonQuery();
+                        rowCount += affected;
+                    }
+                }
+            }
+            return rowCount;
         }
     }
 }

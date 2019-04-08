@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace IPC.Raymond.Benchmark.DAL.EF
 {
-    public class OrderInvoiceEntityFrameworkRepository : IRepository<Invoice>
+    public class EntityFrameworkRepository : IRepository<Invoice, InsertTable>
     {
         private readonly NorthwindEntities context;
 
-        public OrderInvoiceEntityFrameworkRepository(NorthwindEntities context)
+        public EntityFrameworkRepository(NorthwindEntities context)
         {
             this.context = context;
         }
@@ -82,6 +82,19 @@ namespace IPC.Raymond.Benchmark.DAL.EF
                         Freight = dto.Freight,
                         ExtendedPrice = ((dto.UnitPrice * dto.Quantity) * (1 - (decimal)dto.Discount) / 100) * 100
                     });
+        }
+
+        public int InsertRows(IEnumerable<InsertTable> rows)
+        {
+            int rowCount = 0;
+            rows.ToList().ForEach(row =>
+            {
+                context.InsertTables.Add(row);
+                
+                rowCount += 1;
+            });
+            context.SaveChanges();
+            return rowCount;
         }
     }
 }

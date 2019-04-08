@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace IPC.Raymond.Benchmark.DAL.SQL.interfaces
 {
-    public interface IRepository<T> where T : new()
+    public interface IRepository<TGetAll, TInsert> where TGetAll : new()
     {
-        IEnumerable<T> GetAll();
+        IEnumerable<TGetAll> GetAll();
+
+        int InsertRows(IEnumerable<TInsert> rows);
     }
 }

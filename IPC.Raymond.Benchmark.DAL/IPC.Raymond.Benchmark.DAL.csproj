@@ -99,8 +99,8 @@
     <Compile Include="EF\Order.cs">
       <DependentUpon>Northwind.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\OrderInvoiceEntityFrameworkRepository.cs" />
-    <Compile Include="EF\OrderInvoiceViewEntityFrameworkRepository.cs" />
+    <Compile Include="EF\EntityFrameworkRepository.cs" />
+    <Compile Include="EF\ViewEntityFrameworkRepository.cs" />
     <Compile Include="EF\Order_Detail.cs">
       <DependentUpon>Northwind.tt</DependentUpon>
     </Compile>
@@ -110,11 +110,14 @@
     <Compile Include="EF\Shipper.cs">
       <DependentUpon>Northwind.tt</DependentUpon>
     </Compile>
+    <Compile Include="helpers\DatabaseCleanup.cs" />
+    <Compile Include="helpers\InsertTableGenerator.cs" />
+    <Compile Include="helpers\StringGeneratorHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQL\interfaces\IOrderInvoiceRepository.cs" />
-    <Compile Include="SQL\OrderInvoiceRawSqlDapperRepository.cs" />
-    <Compile Include="SQL\OrderInvoiceRawSqlRepository.cs" />
-    <Compile Include="SQL\OrderInvoiceStoredProcedureRepository.cs" />
+    <Compile Include="SQL\DapperRepository.cs" />
+    <Compile Include="SQL\RawSqlRepository.cs" />
+    <Compile Include="SQL\StoredProcedureRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IPC.Raymond.Benchmark.DTOs\IPC.Raymond.Benchmark.DTOs.csproj">
@@ -144,13 +147,13 @@
       <DependentUpon>Northwind.edmx</DependentUpon>
       <LastGenOutput>Northwind.cs</LastGenOutput>
     </Content>
+    <Content Include="SQL\prepared-statements\clear_insert_tables.sql" />
     <Content Include="SQL\prepared-statements\get_invoices.sql" />
+    <Content Include="SQL\prepared-statements\insert_row.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

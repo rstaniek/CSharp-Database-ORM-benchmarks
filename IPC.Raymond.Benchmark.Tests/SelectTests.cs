@@ -64,7 +64,7 @@ namespace IPC.Raymond.Benchmark.Tests
         public void RawSql()
         {
             //arrange
-            IRepository<InvoiceDto> repo = new OrderInvoiceRawSqlRepository(_connStr);
+            IRepository<InvoiceDto, InsertTableDto> repo = new RawSqlRepository(_connStr);
 
             //act
             var results = repo.GetAll();
@@ -77,7 +77,7 @@ namespace IPC.Raymond.Benchmark.Tests
         public void RawSqlStoredProcedure()
         {
             //arrange
-            IRepository<InvoiceDto> repo = new OrderInvoiceStoredProcedureRepository(_connStr);
+            IRepository<InvoiceDto, InsertTableDto> repo = new StoredProcedureRepository(_connStr);
 
             //act
             var results = repo.GetAll();
@@ -90,7 +90,7 @@ namespace IPC.Raymond.Benchmark.Tests
         public void Dapper()
         {
             //arrange
-            IRepository<InvoiceDto> repo = new OrderInvoiceRawSqlDapperRepository(_connStr);
+            IRepository<InvoiceDto, InsertTableDto> repo = new DapperRepository(_connStr);
 
             //act
             var results = repo.GetAll();

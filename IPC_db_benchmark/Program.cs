@@ -12,7 +12,8 @@ namespace IPC.Raymond.Benchmark
     {
         static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<BenchmarkSelect>();
+            var selectSummary = BenchmarkRunner.Run<BenchmarkSelect>();
+            var insertSummary = BenchmarkRunner.Run<BenchmarkInsert>();
             Console.ReadLine();
         }
     }

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace IPC.Raymond.Benchmark.DAL.EF
 {
-    public class OrderInvoiceViewEntityFrameworkRepository : IRepository<Invoice>
+    public class ViewEntityFrameworkRepository : IRepository<Invoice, InsertTable>
     {
         private readonly NorthwindEntities context;
 
-        public OrderInvoiceViewEntityFrameworkRepository(NorthwindEntities context)
+        public ViewEntityFrameworkRepository(NorthwindEntities context)
         {
             this.context = context;
         }
@@ -20,6 +20,17 @@ namespace IPC.Raymond.Benchmark.DAL.EF
         public IEnumerable<Invoice> GetAll()
         {
             return context.Invoices.ToList();
+        }
+
+        public int InsertRows(IEnumerable<InsertTable> rows)
+        {
+            int rowCount = 0;
+            rows.ToList().ForEach(row =>
+            {
+                context.InsertTables.Add(row);
+                rowCount += 1;
+            });
+            return rowCount;
         }
     }
 }

@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace IPC.Raymond.Benchmark.DAL.SQL
 {
-    public class OrderInvoiceRawSqlDapperRepository : IRepository<InvoiceDto>
+    public class DapperRepository : IRepository<InvoiceDto, InsertTableDto>
     {
         private readonly string _connStr;
 
-        public OrderInvoiceRawSqlDapperRepository(string connStr)
+        public DapperRepository(string connStr)
         {
             _connStr = connStr;
         }
@@ -37,6 +37,21 @@ namespace IPC.Raymond.Benchmark.DAL.SQL
                 IEnumerable<InvoiceDto> invoices = conn.QueryAsync<InvoiceDto>(qry).Result;
                 return invoices;
             }
+        }
+
+        public int InsertRows(IEnumerable<InsertTableDto> rows)
+        {
+            const string qry = @"INSERT INTO [dbo].[InsertTable_Dapper] (id,textVar,timestamp,number1)
+	                             VALUES(@id,@textVar,@timestamp,@number1);";
+            int rowCount = 0;
+            using(var conn = new SqlConnection(_connStr))
+            {
+                foreach(var row in rows)
+                {
+                    rowCount += conn.Execute(qry, row);
+                }
+            }
+            return rowCount;
         }
     }
 }

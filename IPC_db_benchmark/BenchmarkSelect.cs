@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace IPC.Raymond.Benchmark
 {
-    [SimpleJob(runStrategy: RunStrategy.Throughput, launchCount: 1, warmupCount: 5, targetCount: 200)]
-    [MinColumn, MaxColumn, MemoryDiagnoser, RankColumn(BenchmarkDotNet.Mathematics.NumeralSystem.Roman)]
+    [SimpleJob(runStrategy: RunStrategy.Throughput, launchCount: 1, warmupCount: 5, targetCount: 10)]
+    [MinColumn, MaxColumn, SkewnessColumn, MemoryDiagnoser, RankColumn(BenchmarkDotNet.Mathematics.NumeralSystem.Roman)]
     [HtmlExporter, RPlotExporter, CsvExporter, CsvMeasurementsExporter]
     public class BenchmarkSelect
     {
-        private readonly IRepository<Invoice> EntityFrameworkRawRepository, EntityFrameworkViewRepository;
-        private readonly IRepository<InvoiceDto> DapperRawSqlRepository, RawSqlRepository, RawSqlStoredProcedureRepository;
+        private readonly IRepository<Invoice, InsertTable> EntityFrameworkRawRepository, EntityFrameworkViewRepository;
+        private readonly IRepository<InvoiceDto, InsertTableDto> DapperRawSqlRepository, RawSqlRepository, RawSqlStoredProcedureRepository;
 
         private readonly NorthwindEntities _dbContext;
         private readonly string _connStr = "Data Source=RAYMOND-WORKSTA;Initial Catalog=Northwind;Integrated Security=True";
@@ -27,11 +27,11 @@ namespace IPC.Raymond.Benchmark
         {
             _dbContext = new NorthwindEntities();
 
-            EntityFrameworkRawRepository = new OrderInvoiceEntityFrameworkRepository(_dbContext);
-            EntityFrameworkViewRepository = new OrderInvoiceViewEntityFrameworkRepository(_dbContext);
-            DapperRawSqlRepository = new OrderInvoiceRawSqlDapperRepository(_connStr);
-            RawSqlRepository = new OrderInvoiceRawSqlRepository(_connStr);
-            RawSqlStoredProcedureRepository = new OrderInvoiceStoredProcedureRepository(_connStr);
+            EntityFrameworkRawRepository = new EntityFrameworkRepository(_dbContext);
+            EntityFrameworkViewRepository = new ViewEntityFrameworkRepository(_dbContext);
+            DapperRawSqlRepository = new DapperRepository(_connStr);
+            RawSqlRepository = new RawSqlRepository(_connStr);
+            RawSqlStoredProcedureRepository = new StoredProcedureRepository(_connStr);
         }
 
         [Benchmark]

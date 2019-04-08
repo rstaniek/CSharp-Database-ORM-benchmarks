@@ -4,17 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace IPC.Raymond.Benchmark.DAL.SQL
 {
-    public class OrderInvoiceRawSqlRepository : IRepository<InvoiceDto>
+    public class RawSqlRepository : IRepository<InvoiceDto, InsertTableDto>
     {
         private readonly string _connStr;
 
-        public OrderInvoiceRawSqlRepository(string connStr)
+        public RawSqlRepository(string connStr)
         {
             _connStr = connStr;
         }
@@ -79,6 +80,26 @@ namespace IPC.Raymond.Benchmark.DAL.SQL
                 }
             }
             return invoices;
+        }
+
+        public int InsertRows(IEnumerable<InsertTableDto> rows)
+        {
+            int rowCount = 0;
+            using(var conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                foreach(var row in rows)
+                {
+                    string qry = $"INSERT INTO [dbo].[InsertTable_ado] (id,textVar,timestamp,number1) VALUES('{row.id.ToString()}','{row.textVar}','{row.timestamp.ToString()}',{row.number1});";
+                    Debug.Fail(qry);
+                    using (var cmd = new SqlCommand(qry, conn))
+                    {
+                        int rowsAffedted = cmd.ExecuteNonQuery();
+                        rowCount += rowsAffedted;
+                    }
+                }
+            }
+            return rowCount;
         }
     }
 }
