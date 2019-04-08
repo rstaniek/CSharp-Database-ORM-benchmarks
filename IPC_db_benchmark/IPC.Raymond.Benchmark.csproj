@@ -247,7 +247,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BenchmarkInsert.cs" />
+    <Compile Include="BenchmarkInsertMultiple.cs" />
+    <Compile Include="BenchmarkInsertSingle.cs" />
     <Compile Include="BenchmarkLibTest.cs" />
     <Compile Include="BenchmarkSelect.cs" />
     <Compile Include="Program.cs" />

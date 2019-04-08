@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IPC.Raymond.Benchmark
 {
-    [SimpleJob(runStrategy: RunStrategy.Throughput, launchCount: 1, warmupCount: 5, targetCount: 10)]
+    [SimpleJob(runStrategy: RunStrategy.Throughput, launchCount: 3, warmupCount: 5, targetCount: 200)]
     [MinColumn, MaxColumn, SkewnessColumn, MemoryDiagnoser, RankColumn(BenchmarkDotNet.Mathematics.NumeralSystem.Roman)]
     [HtmlExporter, RPlotExporter, CsvExporter, CsvMeasurementsExporter]
     public class BenchmarkSelect

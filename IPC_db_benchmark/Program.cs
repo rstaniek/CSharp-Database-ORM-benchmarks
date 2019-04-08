@@ -13,7 +13,8 @@ namespace IPC.Raymond.Benchmark
         static void Main(string[] args)
         {
             var selectSummary = BenchmarkRunner.Run<BenchmarkSelect>();
-            var insertSummary = BenchmarkRunner.Run<BenchmarkInsert>();
+            //var insertMultipleSummary = BenchmarkRunner.Run<BenchmarkInsertMultiple>();
+            //var insertSingleSummary = BenchmarkRunner.Run<BenchmarkInsertSingle>();
             Console.ReadLine();
         }
     }

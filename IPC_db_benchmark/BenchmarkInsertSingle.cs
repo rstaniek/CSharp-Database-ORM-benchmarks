@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace IPC.Raymond.Benchmark
 {
-    [SimpleJob(runStrategy: RunStrategy.Throughput, launchCount: 1, warmupCount: 5, targetCount: 10)]
+    [SimpleJob(runStrategy: RunStrategy.Throughput, launchCount: 3, warmupCount: 5, targetCount: 200)]
     [MinColumn, MaxColumn, SkewnessColumn, MemoryDiagnoser, RankColumn(BenchmarkDotNet.Mathematics.NumeralSystem.Roman)]
     [HtmlExporter, RPlotExporter, CsvExporter, CsvMeasurementsExporter]
-    public class BenchmarkInsert
+    public class BenchmarkInsertSingle
     {
         private readonly IRepository<Invoice, InsertTable> EntityFrameworkRawRepository;
         private readonly IRepository<InvoiceDto, InsertTableDto> DapperRawSqlRepository, RawSqlRepository, RawSqlStoredProcedureRepository;
@@ -24,12 +24,12 @@ namespace IPC.Raymond.Benchmark
         private readonly NorthwindEntities _dbContext;
         private readonly string _connStr = "Data Source=RAYMOND-WORKSTA;Initial Catalog=Northwind;Integrated Security=True";
 
-        private static readonly int OBJECT_COUNT = 64;
+        private static readonly int OBJECT_COUNT = 1;
         private static readonly int textLength = 65536;
         private List<InsertTable> efList;
         private List<InsertTableDto> dtoList1, dtoList2, dtoList3;
 
-        public BenchmarkInsert()
+        public BenchmarkInsertSingle()
         {
             _dbContext = new NorthwindEntities();
 
@@ -39,7 +39,7 @@ namespace IPC.Raymond.Benchmark
             RawSqlStoredProcedureRepository = new StoredProcedureRepository(_connStr);
 
             //IMPORTANT STEP: BEFORE STARTING THE BENCHMARK - MAKE SURE THE TABLES ARE EMPTY FOR CONSISTENT RESULTS!!!
-            //new DatabaseCleanup(_connStr).ClearInsertTables();
+            new DatabaseCleanup(_connStr).ClearInsertTables();
 
             efList = new List<InsertTable>();
             dtoList1 = new List<InsertTableDto>();

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>IPC.Raymond.Benchmark.BenchmarkSelect-20190408-041132</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.11.5, OS=Windows 10.0.17763.404 (1809/October2018Update/Redstone5)
+AMD Ryzen Threadripper 1920X, 1 CPU, 24 logical and 12 physical cores
+  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 32bit LegacyJIT-v4.7.3324.0
+  Job-XFKEYD : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 32bit LegacyJIT-v4.7.3324.0
+</code></pre>
+<pre><code>IterationCount=200  LaunchCount=3  RunStrategy=Throughput  
+WarmupCount=5  
+</code></pre>
+
+<table>
+<thead><tr><th>  Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Min</th><th>Max</th><th>Skewness</th><th>Rank</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>Select_EF_Raw</td><td>17.45 ms</td><td>0.0482 ms</td><td>0.3519 ms</td><td>17.39 ms</td><td>16.85 ms</td><td>18.99 ms</td><td>1.3990</td><td>III</td><td>1000.0000</td><td>-</td><td>-</td><td>2.42 MB</td>
+</tr><tr><td>Select_EF_View</td><td>14.49 ms</td><td>0.0301 ms</td><td>0.2202 ms</td><td>14.49 ms</td><td>13.99 ms</td><td>15.09 ms</td><td>0.0324</td><td>I</td><td>1000.0000</td><td>-</td><td>-</td><td>1.53 MB</td>
+</tr><tr><td>Select_Dapper</td><td>16.78 ms</td><td>0.0260 ms</td><td>0.1907 ms</td><td>16.78 ms</td><td>16.30 ms</td><td>17.28 ms</td><td>0.0603</td><td>II</td><td>1000.0000</td><td>-</td><td>-</td><td>1.99 MB</td>
+</tr><tr><td>Select_ADO_NET</td><td>46.31 ms</td><td>0.0354 ms</td><td>0.2522 ms</td><td>46.29 ms</td><td>45.66 ms</td><td>47.47 ms</td><td>1.1263</td><td>IV</td><td>1000.0000</td><td>-</td><td>-</td><td>2.42 MB</td>
+</tr><tr><td>Select_SP</td><td>46.48 ms</td><td>0.0748 ms</td><td>0.5384 ms</td><td>46.48 ms</td><td>45.58 ms</td><td>48.60 ms</td><td>1.0375</td><td>IV</td><td>1000.0000</td><td>-</td><td>-</td><td>2.42 MB</td>
+</tr></tbody></table>
+</body>
+</html>
